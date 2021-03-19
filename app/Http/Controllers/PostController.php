@@ -7,12 +7,18 @@ use App\Http\Resources\Post\PostCollection;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $data = Post::paginate(10);
+        // DB listen
+        // DB::listen(function($query){
+        //     var_dump($query->sql);
+        // });
+
+        $data = Post::with(['user'])->paginate(10);
         return new PostCollection($data);
         // return response()->json($data,200);
 
