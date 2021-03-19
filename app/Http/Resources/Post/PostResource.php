@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Post;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\User\UserResource;
 
 class PostResource extends JsonResource
 {
@@ -17,7 +18,8 @@ class PostResource extends JsonResource
         return [
             'title'     => $this->title,
             'body'      => $this->body,
-            'store_at'  => $this->created_at->diffForHumans()
+            'store_at'  => $this->created_at->diffForHumans(),
+            'user' => new UserResource($this->user)
         ];
     }
 }
