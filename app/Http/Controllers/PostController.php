@@ -11,8 +11,14 @@ use DB;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index()
     {
+        return request()->user();
         // DB listen
         // DB::listen(function($query){
         //     var_dump($query->sql);
@@ -50,8 +56,8 @@ class PostController extends Controller
                 return response()->json(['error' => $validator->errors()],400);
             }
 
-        $response = Post::create($data);
-
+        // $response = Post::create($data);
+        $response = request()->user()->posts()->create($data);
         return response()->json($response,201);
     }
 
